@@ -1,0 +1,57 @@
+{
+    "name": "soundtracked",
+    "version": "0.1.0",
+    "private": true,
+    "author": "James McLaughlin <mclaughlinjn@cardiff.ac.uk>",
+    "license": "GPL-3.0-only",
+    "homepage": "https://github.com/jamesnmclaughlin/soundtracked#readme",
+    "description": "A web-application built on React that uses a user's run logs from services such as Strava and Fitbit and compares their running performance against the user's music listening activity using services like Last.fm and Deezer, etc.",
+    "bugs": {
+        "url": "https://github.com/jamesnmclaughlin/soundtracked/issues",
+        "email": "mclaughlinjn@cardiff.ac.uk"
+    },
+    "dependencies": {
+        "@testing-library/jest-dom": "^5.16.5",
+        "@testing-library/react": "^13.4.0",
+        "@testing-library/user-event": "^13.5.0",
+        "axios": "^1.3.4",
+        "base-64": "^1.0.0",
+        "base64url": "^3.0.1",
+        "env-cmd": "^10.1.0",
+        "hex2dec": "^1.1.2",
+        "lodash": "^4.17.21",
+        "md5": "^2.3.0",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-redux": "^8.0.5",
+        "react-router-dom": "^6.8.1",
+        "react-scripts": "^2.1.3",
+        "redux": "^4.2.1",
+        "web-vitals": "^2.1.4"
+    },
+    "proxy": "http://localhost:3001",
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app",
+            "react-app/jest"
+        ]
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    }
+}
