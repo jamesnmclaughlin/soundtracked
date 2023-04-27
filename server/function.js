@@ -113,7 +113,7 @@ module.exports = {
         const urlParameters = new URLSearchParams(postdata);
         
         expiry_date = new Date();
-        expiry_date = new Date(expiry_date.setSeconds(expiry_date.getSeconds() + parseInt(postdata.expires_in)));
+        expiry_date = new Date(expiry_date.setSeconds(expiry_date.getSeconds() + parseInt(urlParameters.get("expires"))));
 
         callback(urlParameters.get("access_token"), expiry_date);
     },
@@ -206,6 +206,8 @@ module.exports = {
                 postdata = response.data;
             });
 
+        console.log(postdata)
+
         expiry_date = new Date();
         expiry_date = new Date(expiry_date.setSeconds(expiry_date.getSeconds() + parseInt(postdata.expires_in)));
 
@@ -238,16 +240,9 @@ module.exports = {
                 postdata = response.data
             });
 
-        console.log({
-            method: 'user.getrecenttracks',
-            api_key: REACT_APP_LASTFM_API_KEY,
-            user: name,
-            from: Math.floor(parseInt(start_date)),
-            to: Math.floor(parseInt(end_date)),
-            extended: 0,
-            limit: 100,
-            format: 'json'
-        })
+        console.log(
+            postdata
+        )
 
         callback(postdata);
     },

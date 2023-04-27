@@ -119,7 +119,7 @@ function reconnectService(service_name) {
 }
 
 
-async function checkSpotifyConnection() {
+function checkSpotifyConnection() {
 
     let reconnectionRequired = true;
 
@@ -130,7 +130,8 @@ async function checkSpotifyConnection() {
     }
 
     if (reconnectionRequired) {
-        await fetch("/get-spotify-session")
+        console.log("reconnect")
+        fetch("/get-spotify-session")
             .then((res) => res.json())
             .then((data) => {
                 if (data.hasOwnProperty('token')) {
@@ -139,10 +140,12 @@ async function checkSpotifyConnection() {
                 if (data.hasOwnProperty('exp_date')) {
                     localStorage.setItem('spotify_expiry_date', data.exp_date);
                 }
-            });
-    }
 
-    return (localStorage.getItem('spotify_access_token') !== null);
+                return (localStorage.getItem('spotify_access_token') !== null);
+            });
+    } else {
+        return true;
+    }
 }
 
 
@@ -273,7 +276,8 @@ async function getSeeds() {
     return seedList;
 }
 
-async function getStravaActivities(callback) {
+async function getStravaActivities() {
+
     const baseURL = "https://www.strava.com/api/v3/athlete/activities";
     let postdata = null;
 
@@ -292,11 +296,11 @@ async function getStravaActivities(callback) {
                 postdata = response;
             });
     }
-    
-    callback(postdata)
+
+    return postdata
 }
 
-async function getStravaActivityInfo(id, callback) {
+async function getStravaActivityInfo(id) {
     const baseURL = "https://www.strava.com/api/v3/athlete/activities";
     let postdata = null;
     let query = "";
@@ -320,7 +324,72 @@ async function getStravaActivityInfo(id, callback) {
         })
     }
 
-    callback(postdata);
+    return(postdata);
+}
+
+async function searchFunction(pace, tracks) {
+    let seedList = "";
+    let trackID = null;
+    let trackList = [];
+
+    // Convert value to understandable pace
+    let pace_text = new Date(parseInt(pace * 1000) * 1000).toISOString().slice(14, 19)
+
+
+    for (let song of tracks) {
+        let now_playing = false;
+
+        // song.name = track
+            // song.artist.name = artist
+            // song.album.#text = album
+
+            if (song.hasOwnProperty('@attr')) {
+                if (song["@attr"].hasOwnProperty('nowplaying')) {
+                    now_playing = song["@attr"].nowplaying;
+                }
+            }
+
+        if (!now_playing) {
+
+            await spotifySearch(song.artist['#text'], null, null, song.name, function(response) {
+                if (response.tracks.items.length > 0) {
+                    trackID = response.tracks.items[0].id;
+                } else {
+                    trackID = null;
+                }
+
+                if (trackID !== null) {
+                    if (seedList !== "") {
+                        seedList += ",";
+                    }
+                    seedList += trackID;
+                }
+            });
+        }
+    }
+
+    await audioFeatures(seedList, function(trackInfo) {
+        if (trackInfo.audio_features.length > 0) {
+
+            for (let feature of trackInfo.audio_features) {
+                trackList.push({
+                    pace: pace,
+                    pace_text: pace_text,
+                    id: feature.id,
+                    bpm: Math.round(feature.tempo),
+                    loudness: feature.loudness,
+                    energy: feature.energy,
+                    key: feature.key,
+                    speechiness: feature.speechiness,
+                    acousticness: feature.acousticness,
+                    danceability: feature.danceability
+                })
+            }
+        }
+    })
+
+    return trackList;
+
 }
 
 export { 
@@ -333,5 +402,6 @@ export {
     getStravaActivityInfo,
     audioFeatures,
     spotifySearch,
+    searchFunction,
     getSeeds
 };

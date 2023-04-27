@@ -3,6 +3,12 @@
     src: url('./resources/HelveticaNeue.ttc');
 }
 
+*, *:before, *:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     font-family: 'Helvetica-Neue', Arial, sans-serif;
@@ -55,8 +61,9 @@ h1 {
     width: 100%;
     background-position: center;
     background-size: cover;
-    height: 100vh;
+    min-height: 100vh;
     position: absolute;
+    height: 100%;
 }
 
 /* ########################## */
@@ -84,7 +91,6 @@ h1 {
         padding: 80px;
         max-width: 700px;
         bottom: 10%;
-        position: absolute;
     }
 
     #home-featured #title {
@@ -111,6 +117,10 @@ h1 {
         border: none;
         color: #fff;
         text-decoration: none;
+    }
+
+    .button-black {
+        background-color: #000;
     }
 
     .button-main:hover {
@@ -225,6 +235,114 @@ h1 {
 
 /* ########################## */
 
+/* HANDLE PAGE CSS ############## */
+
+.handle-container {
+    background-color: #ffffff;
+    padding: 40px;
+    text-align: center;
+    max-width: 50%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 50px;
+    border-radius: 15px;
+    color: #b0b0b0;
+}
+
+.connection-animation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.lds-ellipsis {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 50px;
+  }
+  .lds-ellipsis div {
+    position: absolute;
+    top: 20px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: #b0b0b0;
+    animation-timing-function: cubic-bezier(0, 1, 1, 0);
+  }
+  .lds-ellipsis div:nth-child(1) {
+    left: 8px;
+    animation: lds-ellipsis1 0.6s infinite;
+  }
+  .lds-ellipsis div:nth-child(2) {
+    left: 8px;
+    animation: lds-ellipsis2 0.6s infinite;
+  }
+  .lds-ellipsis div:nth-child(3) {
+    left: 32px;
+    animation: lds-ellipsis2 0.6s infinite;
+  }
+  .lds-ellipsis div:nth-child(4) {
+    left: 56px;
+    animation: lds-ellipsis3 0.6s infinite;
+  }
+  @keyframes lds-ellipsis1 {
+    0% {
+      transform: scale(0);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  @keyframes lds-ellipsis3 {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(0);
+    }
+  }
+  @keyframes lds-ellipsis2 {
+    0% {
+      transform: translate(0, 0);
+    }
+    100% {
+      transform: translate(24px, 0);
+    }
+  }
+  
+
+.handle-logo {
+    height: 120px;
+    width: 120px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.status-icon {
+    height: 40px;
+    width: 40px;
+    margin: 0 auto 10px auto;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#connecting-message {
+    margin: 0;
+    font-size: 22px;
+}
+
+.success { background-image: url('./resources/green-tick.png'); }
+.failure { background-image: url('./resources/red-cross.png'); }
+.strava-logo { background-image: url('./resources/services/strava-logo.png'); }
+.deezer-logo { background-image: url('./resources/services/deezer-logo.png'); }
+.lastfm-logo { background-image: url('./resources/services/lastfm-logo.png'); }
+.fitbit-logo { background-image: url('./resources/services/fitbit-logo.png'); }
+.soundtracked { background-image: url('./resources/logo.png'); }
+
+/* ########################## */
 
 #fetched-runs-container {
     /*width:40%;*/
@@ -239,7 +357,7 @@ h1 {
     display:flex;
 }
 
-.run {
+#fetched-runs-container .run {
     background-color: #78A679;
     padding: 10px 20px;
     margin-bottom: 5px;
@@ -249,17 +367,17 @@ h1 {
     border-radius: 10px;
 }
 
-.run:hover {
+#fetched-runs-container .run:hover {
     cursor: pointer;
 }
 
-.run > div {
+#fetched-runs-container .run > div {
     display: flex;
     align-items: center;
     width: 25%;
 }
 
-.icon {
+#fetched-runs-container > .icon {
     width: 40px;
     margin-right: 10px;
 }
@@ -292,3 +410,197 @@ h1 {
 .song {
     max-width: 300px;
 }
+
+/* LOADING PAGE CSS ############## */
+
+.loading-container {    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#loading-details h1 {
+    font-size: 64px;
+}
+
+#loading-detail p {
+    font-size: 26px;
+}
+
+#loading-details {
+    flex: 1 1;
+}
+
+/* ############################## */
+
+
+/* RESULTS PAGE CSS ############## */
+
+.results-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 40px;
+    height: calc(100% - 78px);
+    gap: 15px;
+}
+
+#run-list .run:hover {
+    cursor: pointer;
+}
+
+#run-list {
+    display:flex;
+    flex-direction: column;
+    margin-top: 40px;
+    row-gap: 10px;
+    max-height: 508px;
+    overflow-y: scroll;
+    padding-right: 8px;
+}
+
+#run-list::-webkit-scrollbar-track {
+    display: none;
+}
+
+#run-list::-webkit-scrollbar {
+    width: 10px;
+    padding-left: 5px;
+}
+
+#run-list::-webkit-scrollbar-thumb {
+    background-color: #00000040;
+    border-radius: 20px;
+}
+
+#run-list .run {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+#run-list .run .information {
+    padding: 11px;
+    background-color: #00000020;
+    display: flex;
+    gap: 15px;
+    width: 100%;
+    align-items: center;
+    justify-content: end;
+}
+
+#run-list .run .information div {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    color: #d8d8d8;
+    line-height: 13px;
+    font-size: 18px;
+    grid-column-gap: 25px;
+    column-gap: 25px;
+    row-gap: 9px;
+    width: 300px;
+}
+
+#run-list .run .title {
+    width: 100%;
+    line-height: 17px;
+    color: #fff;
+    font-size: 23px;
+}
+
+#run-list .run .information .icon {
+    height: 42px;
+    width: 42px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#run-list .run .information .date {
+    margin-left: auto;
+    text-align: right;
+}
+
+#run-list .run .count {
+    font-size: 50px;
+    width: 70px;
+    text-align: center;
+    color: #ffffff60
+}
+
+.results-container #left, .results-container #right {
+    flex: 1 1;
+}
+
+#average-data {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+#average-data .data-item {
+    display: flex;
+    width: 200px;
+    height: 200px;
+    background-color: #00000020;
+    padding: 15px;
+    flex-direction: column;
+}
+
+#average-data .data-item .value {
+    font-size: 70px;
+    width: 100%;
+    line-height: 62px;
+}
+
+#average-data .data-item .measurement {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: center;
+    justify-content: end;
+    gap: 5px;
+}
+
+.data-item .measurement .units {
+    text-transform: uppercase;
+    font-size: 22px;
+}
+
+.data-item .icon {
+    width: 36px;
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: bottom;
+}
+
+.data-item div {
+    display: flex;
+}
+
+.data-item p {
+    height: 100%;
+    margin: 0;
+    font-size: 22px;
+    width: 110px
+}
+
+.results-container #right {
+    height: 100%;
+}
+
+#run-list .run.selected .information {
+    background-color: #00000060;
+}
+#run-list .run.selected .count {
+    color: #fff;
+}
+
+.icon.elevation { background-image: url('./resources/stairs.svg');}
+.icon.speed { background-image: url('./resources/speed.svg');}
+.icon.heart { background-image: url('./resources/heart.png');}
+
+/* ############################## */

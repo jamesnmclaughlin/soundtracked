@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Handle(props) {
 
     const urlParameters = new URLSearchParams(window.location.search);
+    const navigate = useNavigate();
 
     const service_name = props.service_name;
     let authcode = null;
+    let success = true;
 
     const [isLoading, setLoading] = React.useState(true); 
 
@@ -42,6 +45,7 @@ export default function Handle(props) {
 
 
     useEffect(() => {
+
         fetch("/get-session", options)
             .then((res) => res.json())
             .then((data) => {
@@ -65,7 +69,43 @@ export default function Handle(props) {
     }, []);
     
     if (isLoading) {
-        return <div><p style={{color: '#000'}}>Loading...</p></div>
+        return (
+            <div className='background-image-container' id='container-connect'>
+                <div className="container-ground">
+                    <div className="handle-container">
+                        <div className="connection-animation">
+                            <div className="handle-logo soundtracked"></div>
+                            <div>
+                                <div className="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                                <p id="connecting-message">Connecting</p>
+                            </div>
+                            <div className={"handle-logo " + service_name + "-logo"}></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    } 
+
+    if (success) {
+        navigate("/connect");
+    } else {
+        return (
+            <div className='background-image-container' id='container-connect'>
+                <div className="container-ground">
+                    <div className="handle-container">
+                        <div className="connection-animation">
+                            <div class="handle-logo soundtracked"></div>
+                            <div>
+                                <div class="status-icon failure"></div>
+                                <p id="connecting-message">Unable to Connect</p>
+                            </div>
+                            <div class={"handle-logo " + service_name + "-logo"}></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
     }
   
     return (

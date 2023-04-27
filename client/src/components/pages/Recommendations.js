@@ -11,10 +11,6 @@ function Recommendations() {
         setParams(data);
     }, []);
 
-    if (!checkSpotifyConnection()) {
-        return <div>Loading</div>;
-    }
-
     return (
         <div className="background-image-container" id="container-connect">
             <div className="container-ground">

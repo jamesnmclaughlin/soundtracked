@@ -10,6 +10,7 @@ export default function Reccomendation(props) {
     const [postdata, setPostData] = React.useState([]);
     const [isLoading, setLoading] = React.useState(true);
     const [params, setParams] = React.useState(props.params);
+    const [hookValue, setHookValue] = React.useState(0);
 
     const tempo = parseInt(params.tempo);
     const loudness = parseInt(params.loudness);
@@ -17,9 +18,15 @@ export default function Reccomendation(props) {
     let acousticness = parseInt(params.acousticness);
     let speechiness = parseInt(params.speechiness);
 
+    const reload = () => {
+        setHookValue(hookValue => hookValue + 1);
+        console.log("reload function active, value:" + hookValue);
+        fetchData()
+    }
+
     const fetchData = async () => {
         if (checkSpotifyConnection()) {
-
+            console.log("hello")
             const seedTracks = await getSeeds();
             const seedArtists = "";
             const seedGenres = "";
@@ -124,9 +131,8 @@ export default function Reccomendation(props) {
     }, [props.params]);
 
     if (isLoading) {
-        return <div><p style={{color: '#000'}}>Loading...</p></div>
+        return <div><button onClick={reload}>Reload</button></div>
     }
-    
     
     const recommendations = postdata.map((recommendation) => 
         <div key={recommendation.id} className="song" >

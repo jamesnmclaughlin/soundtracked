@@ -7,8 +7,9 @@ import Connect from './components/pages/Connect';
 import Loading from './components/pages/Loading';
 import Runs from './components/pages/Runs';
 import Recommendations from './components/pages/Recommendations';
+import Results from './components/pages/Results';
 
-import Test from './components/pages/Test';
+import Dev from './components/pages/Dev';
 
 import Handle from './components/handlers/Handle';
 
@@ -33,9 +34,10 @@ export default function App() {
                 <Route path='/deezer' element={<Handle service_name="deezer" />}/>  
                 <Route path='/choose-runs' element={<Runs />} />
                 <Route path='/loading' element={<Loading />}/> 
+                <Route path='/results' element={<Results />}/> 
                 <Route path='/recommendations' element={<Recommendations />}/> 
 
-                <Route path='/test' element={<Test />}/>
+                <Route path='/dev' element={<Dev /> } />
 
                 <Route path='*' element={ NoMatch() }/>
             </Routes>

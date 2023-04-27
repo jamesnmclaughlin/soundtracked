@@ -7,7 +7,6 @@ const base64url = require('base64url');
 
 export default function Service(props) {
 
-    console.log(checkServiceConnection(props.api))
     if (checkServiceConnection(props.api)) {
         return (
             <div className="service">
