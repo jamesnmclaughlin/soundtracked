@@ -4,6 +4,7 @@ const express = require("express");
 const exp = require('constants');
 
 const PORT = process.env.PORT || 3001;
+const IP = process.env.IP || '0.0.0.0';
 
 const app = express();
 
@@ -127,6 +128,6 @@ app.get("/get-lastfm-songs", (req, res) => {
     });
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, IP, () => {
     console.log('Listening on '+ PORT);
 })
