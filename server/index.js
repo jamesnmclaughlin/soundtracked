@@ -3,7 +3,7 @@ const functions = require('./function.js');
 const express = require("express");
 const exp = require('constants');
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 8080;
 const IP = process.env.IP || '0.0.0.0';
 
 const app = express();
