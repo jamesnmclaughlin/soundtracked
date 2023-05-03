@@ -30,7 +30,7 @@
         "redux": "^4.2.1",
         "web-vitals": "^2.1.4"
     },
-    "proxy": "http://0.0.0.0:8080",
+    "proxy": "http://localhost:8080",
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
@@ -55,4 +55,5 @@
             "last 1 safari version"
         ]
     }
+
 }
