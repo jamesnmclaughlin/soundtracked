@@ -12,7 +12,7 @@ export default function Service(props) {
             <div className="service">
                 <div className={"service-img " + props.api}></div>
                 <div className={"service-type " + props.type}></div>
-                <a className="service-connect connected" href="#">Connected</a>
+                <button className="service-connect connected">Connected</button>
             </div>
         );
     }

@@ -1,7 +1,6 @@
 import React, { useCallback, useState} from 'react';
 import Recommendation from '../recommendation';
 import Parameters from '../parameter-form';
-import { checkSpotifyConnection } from '../functions/functions';
 
 function Recommendations() {
 
@@ -12,7 +11,7 @@ function Recommendations() {
     }, []);
 
     return (
-        <div className="background-image-container" id="container-connect">
+        <div className="background-image-container" id="container-gradient">
             <div className="container-ground">
                 <div id="parameter-container">
                     <Parameters addParams={addParams}/>
@@ -26,3 +25,4 @@ function Recommendations() {
 }
 
 export default Recommendations;
+

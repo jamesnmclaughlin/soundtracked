@@ -4,7 +4,6 @@ const express = require("express");
 const exp = require('constants');
 
 const PORT = process.env.PORT || 8080;
-const IP = process.env.IP || '0.0.0.0';
 
 const app = express();
 
@@ -12,23 +11,25 @@ app.use(express.json())
 
 app.post("/get-client", (req, res) => {
     const { service_name } = req.body;
+    const { 
+        REACT_APP_STRAVA_CLIENT_ID,
+        REACT_APP_FITBIT_CLIENT_ID,
+        REACT_APP_LASTFM_API_KEY,
+        REACT_APP_DEEZER_CLIENT_ID
+    } = process.env;
     let response = null;
 
     switch(service_name) {
         case "strava":
-            const { REACT_APP_STRAVA_CLIENT_ID } = process.env;
             response = REACT_APP_STRAVA_CLIENT_ID;
             break;
         case "fitbit":
-            const { REACT_APP_FITBIT_CLIENT_ID } = process.env;
             response = REACT_APP_FITBIT_CLIENT_ID;
             break;
         case "lastfm":
-            const { REACT_APP_LASTFM_API_KEY } = process.env;
             response = REACT_APP_LASTFM_API_KEY;
             break;
         case "deezer":
-            const { REACT_APP_DEEZER_CLIENT_ID } = process.env;
             response = REACT_APP_DEEZER_CLIENT_ID;
             break;
     }
@@ -128,6 +129,6 @@ app.get("/get-lastfm-songs", (req, res) => {
     });
 });
 
-app.listen(PORT, IP, () => {
+app.listen(PORT, () => {
     console.log('Listening on '+ PORT);
 })

@@ -6,7 +6,7 @@ import GetRuns from '../get-runs';
 function Runs() {
 
     return (
-        <div className="background-image-container" id="container-runs">
+        <div className="background-image-container" id="container-triangle">
             <div className="container-ground">
                 <Logo />
                 <div className="flex-container">

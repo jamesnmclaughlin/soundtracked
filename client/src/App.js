@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Route, Routes, Link } from "react-router-dom";
 import {reconnectService, checkServiceConnection} from './components/functions/functions';
 

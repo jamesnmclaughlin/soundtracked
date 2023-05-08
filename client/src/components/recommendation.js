@@ -34,76 +34,48 @@ export default function Reccomendation(props) {
 
             // TEMPO
             if (!isNaN(tempo)) {
-
-                if (tempo <= 5) {
-                    parameters += "&min_tempo=0";
-                } else {
-                    parameters += "&min_tempo=" + (tempo-5);
-                }
+                if (tempo <= 5) { parameters += "&min_tempo=0"; }
+                else { parameters += "&min_tempo=" + (tempo-5); }
                 parameters += "&max_tempo=" + (tempo+5);
             }
             
             // LOUDNESS
             if (!isNaN(loudness)) {
-
-                if (loudness <= -55) {
-                    parameters += "&min_loudness=-60";
-                } else {
-                    parameters += "&min_loudness=" + (loudness-5);
-                }
+                if (loudness <= -55) { parameters += "&min_loudness=-60"; } 
+                else { parameters += "&min_loudness=" + (loudness-5); }
                 parameters += "&max_loudness=" + (loudness+5);
             }
 
             // KEY
             if (!isNaN(key)) {
-                
-                if (key == 0) {
-                    parameters += "&min_key=0";
-                } else {
-                    parameters += "&min_key=" + (key-1);
-                }
+                if (key === 0) { parameters += "&min_key=0"; } 
+                else { parameters += "&min_key=" + (key-1); }
 
-                if (key == 11) {
-                    parameters += "&max_key=11";
-                } else {
-                    parameters += "&max_key=" + (key+1);
-                }
+                if (key === 11) { parameters += "&max_key=11"; } 
+                else { parameters += "&max_key=" + (key+1); }
             }
 
             // ACOUSTICNESS
             if (!isNaN(acousticness)) {
                 acousticness = acousticness/100;
 
-                if (acousticness <= 5) {
-                    parameters += "&min_acousticness=0";
-                } else {
-                    parameters += "&min_acousticness=" + (acousticness-5);
-                }
+                if (acousticness <= 5) { parameters += "&min_acousticness=0"; } 
+                else { parameters += "&min_acousticness=" + (acousticness-5); }
     
-                if (acousticness >= 95) {
-                    parameters += "&max_acousticness=100";
-                } else {
-                    parameters += "&max_acousticness=" + (acousticness+5);
-                }
+                if (acousticness >= 95) { parameters += "&max_acousticness=100"; } 
+                else { parameters += "&max_acousticness=" + (acousticness+5); }
             }
 
             // SPEECHINESS
             if (!isNaN(speechiness)) {
                 speechiness = speechiness/100;
 
-                if (speechiness <= 5) {
-                    parameters += "&min_speechiness=0";
-                } else {
-                    parameters += "&min_speechiness=" + (speechiness-5);
-                }
+                if (speechiness <= 5) { parameters += "&min_speechiness=0"; } 
+                else { parameters += "&min_speechiness=" + (speechiness-5); }
     
-                if (speechiness >= 95) {
-                    parameters += "&max_speechiness=100";
-                } else {
-                    parameters += "&max_speechiness=" + (speechiness+5);
-                }
+                if (speechiness >= 95) { parameters += "&max_speechiness=100"; } 
+                else { parameters += "&max_speechiness=" + (speechiness+5); }
             }
-
 
             fetch(baseURL + apiFunction + "seed_tracks=" + seedTracks + "&seed_artists=" + seedArtists + "&seed_genres=" + seedGenres + parameters, {
                 method: 'GET',
@@ -114,11 +86,7 @@ export default function Reccomendation(props) {
             })
             .then(res => res.json())
             .then((response) => {
-
                 setPostData(response.tracks);
-
-                console.log(response)
-
                 setLoading(false);
             })
             .catch((err) => console.log("error"));
@@ -143,8 +111,6 @@ export default function Reccomendation(props) {
             </div>
         </div>
     );
-
-    //const recommendations = JSON.stringify(postdata);
 
     return recommendations;
 }

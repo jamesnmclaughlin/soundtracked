@@ -6,7 +6,7 @@ import Service from '../service';
 
 function Connect() {
     return (
-        <div className='background-image-container' id='container-connect'>
+        <div className='background-image-container' id='container-gradient'>
             <div className="container-ground">
                 <Logo />
                 <div className="flex-container">

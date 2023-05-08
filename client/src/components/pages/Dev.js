@@ -6,7 +6,7 @@ import Logo from '../Logo';
 export default function Dev() {
 
     return (
-        <div className='background-image-container' id='container-connect'>
+        <div className='background-image-container' id='container-gradient'>
             <div className="container-ground">
                 <Logo />
                 <div className="results-container">

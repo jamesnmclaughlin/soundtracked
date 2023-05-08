@@ -1,7 +1,6 @@
-import { all } from 'axios';
 import React, {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { checkServiceConnection, searchFunction, spotifySearch, audioFeatures, getStravaActivities, getStravaActivityInfo } from '../functions/functions';
+import { searchFunction, getStravaActivities, getStravaActivityInfo } from '../functions/functions';
 import Logo from '../Logo';
 import ProgressBar from '../progress-bar';
 
@@ -13,9 +12,7 @@ export default function Test() {
     const running_webm = require('../../resources/running-1.webm');
 
     const [percentage, setPercentage] = useState(0);
-    const [response, setResponse] = useState([]);
     const [isLoading, setLoading] = useState(true);
-    let trackInfo = null;
 
     const fetchData = async () => {
 
@@ -35,7 +32,7 @@ export default function Test() {
             counter += 1;
 
             // Ignore Activity If Not a Run
-            if (activity.type == "Run") {
+            if (activity.type === "Run") {
 
                 let resultData = [];
                 
@@ -98,7 +95,6 @@ export default function Test() {
                         await fetch("/get-lastfm-songs?start_date=" + start_date + "&end_date=" + end_date + "&user=" + localStorage.getItem("lastfm_name"))
                             .then(res => res.json())
                             .then(async (data) => {
-                                setResponse(data.response.recenttracks.track);
 
                                 if (data.response.recenttracks.track.length > 0) {
                                     
@@ -151,7 +147,7 @@ export default function Test() {
 
     if (isLoading) {
         return (
-            <div className='background-image-container' id='container-runs'>
+            <div className='background-image-container' id='container-triangle'>
                 <div className="container-ground">
                     <Logo />
                     <div className="loading-container">

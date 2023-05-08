@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { checkServiceConnection, reconnectService } from './functions/functions';
+import { checkServiceConnection } from './functions/functions';
 import time from '../resources/time.png';
 import distance from '../resources/distance.png';
 import elevation from '../resources/elevation.png';

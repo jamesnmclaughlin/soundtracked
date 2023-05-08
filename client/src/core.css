@@ -39,31 +39,28 @@ h1 {
 
 /* PAGE BACKGROUNDS ########## */
 
-    #container-connect {
+    #container-gradient {
         background-image: url('./resources/gradient-low.png');
         width: 100vw;
     }
 
-    #container-home {
+    #container-waves {
         background-image: url('./resources/background.png');
     }
 
-    #container-runs {
+    #container-triangle {
         background-image: url('./resources/triangles-low.png');
     }
 
-    #container-loading {
-        background-image: url('');
+
+    .background-image-container {
+        width: 100%;
+        background-position: center;
+        background-size: cover;
+        min-height: 100vh;
+        position: absolute;
     }
-
-
-.background-image-container {
-    width: 100%;
-    background-position: center;
-    background-size: cover;
-    min-height: 100vh;
-    position: absolute;
-}
+    
 
 /* ########################## */
 
@@ -195,6 +192,8 @@ h1 {
         color: #fff;
         text-decoration: none;
         text-transform: uppercase;
+        font-size: 16px;
+        border: none;
     }
 
 
@@ -485,7 +484,7 @@ h1 {
     gap: 15px;
     width: 100%;
     align-items: center;
-    justify-content: end;
+    justify-content: flex-end;
 }
 
 #run-list .run .information div {
@@ -558,7 +557,7 @@ h1 {
     flex-direction: column;
     height: 100%;
     align-items: center;
-    justify-content: end;
+    justify-content: flex-end;
     gap: 5px;
 }
 

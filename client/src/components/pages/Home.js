@@ -5,7 +5,7 @@ import Logo from '../Logo';
 
 function Home() {
     return(
-        <div className="background-image-container" id="container-home">
+        <div className="background-image-container" id="container-waves">
             <div className="container-ground">
                 <Logo />
                 <div id='home-featured'>

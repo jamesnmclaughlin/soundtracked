@@ -70,7 +70,7 @@ export default function Handle(props) {
     
     if (isLoading) {
         return (
-            <div className='background-image-container' id='container-connect'>
+            <div className='background-image-container' id='container-gradient'>
                 <div className="container-ground">
                     <div className="handle-container">
                         <div className="connection-animation">
@@ -91,7 +91,7 @@ export default function Handle(props) {
         navigate("/connect");
     } else {
         return (
-            <div className='background-image-container' id='container-connect'>
+            <div className='background-image-container' id='container-gradient'>
                 <div className="container-ground">
                     <div className="handle-container">
                         <div className="connection-animation">

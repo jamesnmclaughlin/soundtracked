@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 
 //  -- getServiceID() --
@@ -301,7 +301,6 @@ async function getStravaActivities() {
 }
 
 async function getStravaActivityInfo(id) {
-    const baseURL = "https://www.strava.com/api/v3/athlete/activities";
     let postdata = null;
     let query = "";
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState} from 'react';
 import { useLocation, Link } from 'react-router-dom';
 
 import Graph from '../graph';
@@ -12,11 +12,11 @@ const secondsToText = (time) => {
     let minutesRounded = Math.round(minutes);
 
     let hourText = "hr"
-    if (hoursRounded != 1) {
+    if (hoursRounded !== 1) {
         hourText += "s"
     }
     let minText = "min"
-    if (minutesRounded != 1) {
+    if (minutesRounded !== 1) {
         minText += "s"
     }
     
@@ -66,14 +66,10 @@ export default function Results() {
     const activityClick = (id) => {
         let index = selectedRuns.toString().indexOf(id);
         if (index > -1) {
-            updateSelectedRuns(selectedRuns.filter(index => index != id));
+            updateSelectedRuns(selectedRuns.filter(index => index !== id));
         } else {
             updateSelectedRuns(selectedRuns.concat(id));
         }
-    }
-
-    const changeRunFilter = (option) => {
-        updateRunFilter(option);
     }
 
     const selectData = activity_results.filter(activity => selectedRuns.toString().indexOf(activity.id) > -1);
@@ -98,7 +94,7 @@ export default function Results() {
     )
 
     return (
-        <div className='background-image-container' id='container-home'>
+        <div className='background-image-container' id='container-waves'>
             <div className="container-ground">
                 <Logo />
                 <div className="results-container">
