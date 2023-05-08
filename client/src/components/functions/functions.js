@@ -17,7 +17,7 @@ function getServiceID(service_name) {
     }
 
     React.useEffect(() => {
-        fetch("/get-client", options)
+        fetch("http://soundtracked-server-soundtracked.apps.openshift.cs.cf.ac.uk/get-client", options)
           .then((res) => res.json())
           .then((data) => setData(data.key));
       }, []);
@@ -96,7 +96,7 @@ function reconnectService(service_name) {
             })
         }
     
-        fetch("/refresh-session", options)
+        fetch("http://soundtracked-server-soundtracked.apps.openshift.cs.cf.ac.uk/refresh-session", options)
             .then((res) => res.json())
             .then((data) => {
 
@@ -131,7 +131,7 @@ function checkSpotifyConnection() {
 
     if (reconnectionRequired) {
         console.log("reconnect")
-        fetch("/get-spotify-session")
+        fetch("http://soundtracked-server-soundtracked.apps.openshift.cs.cf.ac.uk/get-spotify-session")
             .then((res) => res.json())
             .then((data) => {
                 if (data.hasOwnProperty('token')) {
@@ -334,22 +334,19 @@ async function searchFunction(pace, tracks) {
     // Convert value to understandable pace
     let pace_text = new Date(parseInt(pace * 1000) * 1000).toISOString().slice(14, 19)
 
-
     for (let song of tracks) {
         let now_playing = false;
 
         // song.name = track
-            // song.artist.name = artist
-            // song.album.#text = album
-
-            if (song.hasOwnProperty('@attr')) {
-                if (song["@attr"].hasOwnProperty('nowplaying')) {
-                    now_playing = song["@attr"].nowplaying;
-                }
+        // song.artist.name = artist
+        // song.album.#text = album
+        if (song.hasOwnProperty('@attr')) {
+            if (song["@attr"].hasOwnProperty('nowplaying')) {
+                now_playing = song["@attr"].nowplaying;
             }
+        }
 
         if (!now_playing) {
-
             await spotifySearch(song.artist['#text'], null, null, song.name, function(response) {
                 if (response.tracks.items.length > 0) {
                     trackID = response.tracks.items[0].id;
@@ -369,7 +366,6 @@ async function searchFunction(pace, tracks) {
 
     await audioFeatures(seedList, function(trackInfo) {
         if (trackInfo.audio_features.length > 0) {
-
             for (let feature of trackInfo.audio_features) {
                 trackList.push({
                     pace: pace,
@@ -388,7 +384,6 @@ async function searchFunction(pace, tracks) {
     })
 
     return trackList;
-
 }
 
 export { 

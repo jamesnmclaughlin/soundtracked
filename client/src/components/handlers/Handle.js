@@ -46,7 +46,7 @@ export default function Handle(props) {
 
     useEffect(() => {
 
-        fetch("/get-session", options)
+        fetch("http://soundtracked-server-soundtracked.apps.openshift.cs.cf.ac.uk/get-session", options)
             .then((res) => res.json())
             .then((data) => {
                 console.log(data);
@@ -64,8 +64,8 @@ export default function Handle(props) {
                     localStorage.setItem(service_name + '_refresh_token', data.refresh_token);
                 }
                 setLoading(false);
+                navigate("/connect")
             });
-      
     }, []);
     
     if (isLoading) {
@@ -87,26 +87,24 @@ export default function Handle(props) {
         )
     } 
 
-    if (success) {
-        navigate("/connect");
-    } else {
-        return (
-            <div className='background-image-container' id='container-gradient'>
-                <div className="container-ground">
-                    <div className="handle-container">
-                        <div className="connection-animation">
-                            <div class="handle-logo soundtracked"></div>
-                            <div>
-                                <div class="status-icon failure"></div>
-                                <p id="connecting-message">Unable to Connect</p>
-                            </div>
-                            <div class={"handle-logo " + service_name + "-logo"}></div>
+  
+    return (
+        <div className='background-image-container' id='container-gradient'>
+            <div className="container-ground">
+                <div className="handle-container">
+                    <div className="connection-animation">
+                        <div class="handle-logo soundtracked"></div>
+                        <div>
+                            <div class="status-icon failure"></div>
+                            <p id="connecting-message">Unable to Connect</p>
                         </div>
+                        <div class={"handle-logo " + service_name + "-logo"}></div>
                     </div>
                 </div>
             </div>
-        )
-    }
+        </div>
+    )
+    
   
     return (
         <div>

@@ -4,7 +4,7 @@ import { searchFunction, getStravaActivities, getStravaActivityInfo } from '../f
 import Logo from '../Logo';
 import ProgressBar from '../progress-bar';
 
-export default function Test() {
+export default function Loading() {
 
     const navigate = useNavigate();
 
@@ -87,12 +87,10 @@ export default function Test() {
 
                     // After finding the songs listened to build an object with the metric pace and song features
 
-
                     end_date = start_date + time_diff;
-
                     
                     //if (checkServiceConnection("lastfm")) {
-                        await fetch("/get-lastfm-songs?start_date=" + start_date + "&end_date=" + end_date + "&user=" + localStorage.getItem("lastfm_name"))
+                        await fetch("http://soundtracked-server-soundtracked.apps.openshift.cs.cf.ac.uk/get-lastfm-songs?start_date=" + start_date + "&end_date=" + end_date + "&user=" + localStorage.getItem("lastfm_name"))
                             .then(res => res.json())
                             .then(async (data) => {
 
