@@ -46,7 +46,7 @@ export default function Handle(props) {
 
     useEffect(() => {
 
-        fetch("http://soundtracked-server-soundtracked.apps.openshift.cs.cf.ac.uk/get-session", options)
+        fetch("https://soundtracked-server-soundtracked.apps.openshift.cs.cf.ac.uk/get-session", options)
             .then((res) => res.json())
             .then((data) => {
                 console.log(data);

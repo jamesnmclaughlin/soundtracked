@@ -90,7 +90,7 @@ export default function Loading() {
                     end_date = start_date + time_diff;
                     
                     //if (checkServiceConnection("lastfm")) {
-                        await fetch("http://soundtracked-server-soundtracked.apps.openshift.cs.cf.ac.uk/get-lastfm-songs?start_date=" + start_date + "&end_date=" + end_date + "&user=" + localStorage.getItem("lastfm_name"))
+                        await fetch("https://soundtracked-server-soundtracked.apps.openshift.cs.cf.ac.uk/get-lastfm-songs?start_date=" + start_date + "&end_date=" + end_date + "&user=" + localStorage.getItem("lastfm_name"))
                             .then(res => res.json())
                             .then(async (data) => {
 

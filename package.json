@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server/index.js",
+    "start": "HTTPS=true node server/index.js",
     "start.development.local": "env-cmd -f .env node server/index.js"
   },
   "keywords": [],

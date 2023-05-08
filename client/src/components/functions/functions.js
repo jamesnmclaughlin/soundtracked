@@ -17,7 +17,7 @@ function getServiceID(service_name) {
     }
 
     React.useEffect(() => {
-        fetch("http://soundtracked-server-soundtracked.apps.openshift.cs.cf.ac.uk/get-client", options)
+        fetch("https://soundtracked-server-soundtracked.apps.openshift.cs.cf.ac.uk/get-client", options)
           .then((res) => res.json())
           .then((data) => setData(data.key));
       }, []);
@@ -96,7 +96,7 @@ function reconnectService(service_name) {
             })
         }
     
-        fetch("http://soundtracked-server-soundtracked.apps.openshift.cs.cf.ac.uk/refresh-session", options)
+        fetch("https://soundtracked-server-soundtracked.apps.openshift.cs.cf.ac.uk/refresh-session", options)
             .then((res) => res.json())
             .then((data) => {
 
@@ -131,7 +131,7 @@ function checkSpotifyConnection() {
 
     if (reconnectionRequired) {
         console.log("reconnect")
-        fetch("http://soundtracked-server-soundtracked.apps.openshift.cs.cf.ac.uk/get-spotify-session")
+        fetch("https://soundtracked-server-soundtracked.apps.openshift.cs.cf.ac.uk/get-spotify-session")
             .then((res) => res.json())
             .then((data) => {
                 if (data.hasOwnProperty('token')) {
