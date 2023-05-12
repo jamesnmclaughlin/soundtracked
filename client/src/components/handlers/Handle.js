@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { connectURL } from '../functions/functions';
 
 export default function Handle(props) {
 
@@ -49,23 +50,24 @@ export default function Handle(props) {
         fetch("/get-session", options)
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
-
-                if (data.hasOwnProperty('name')) {
-                    localStorage.setItem(service_name + '_name', data.name)
-                }
-                if (data.hasOwnProperty('token')) {
-                    localStorage.setItem(service_name + '_access_token', data.token);
-                }
-                if (data.hasOwnProperty('exp_date')) {
-                    localStorage.setItem(service_name + '_expiry_date', data.exp_date);
-                }
-                if (data.hasOwnProperty('refresh_token')) {
-                    localStorage.setItem(service_name + '_refresh_token', data.refresh_token);
+                
+                if (!data.hasOwnProperty('err_code')) {
+                    if (data.hasOwnProperty('name')) {
+                        localStorage.setItem(service_name + '_name', data.name)
+                    }
+                    if (data.hasOwnProperty('token')) {
+                        localStorage.setItem(service_name + '_access_token', data.token);
+                    }
+                    if (data.hasOwnProperty('exp_date')) {
+                        localStorage.setItem(service_name + '_expiry_date', data.exp_date);
+                    }
+                    if (data.hasOwnProperty('refresh_token')) {
+                        localStorage.setItem(service_name + '_refresh_token', data.refresh_token);
+                    }
+                    navigate("/connect");
                 }
                 setLoading(false);
-                navigate("/connect")
-            });
+            })
     }, []);
     
     if (isLoading) {
@@ -92,14 +94,15 @@ export default function Handle(props) {
         <div className='background-image-container' id='container-gradient'>
             <div className="container-ground">
                 <div className="handle-container">
-                    <div className="connection-animation">
-                        <div class="handle-logo soundtracked"></div>
+                    <div className="connection-animation" style={{ "margin-bottom": "50px" }}>
+                        <div className="handle-logo soundtracked"></div>
                         <div>
-                            <div class="status-icon failure"></div>
+                            <div className="status-icon failure"></div>
                             <p id="connecting-message">Unable to Connect</p>
                         </div>
-                        <div class={"handle-logo " + service_name + "-logo"}></div>
+                        <div className={"handle-logo " + service_name + "-logo"}></div>
                     </div>
+                    <Link className="button-main " to={'/connect'}>Back</Link>
                 </div>
             </div>
         </div>

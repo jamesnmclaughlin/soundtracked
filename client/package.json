@@ -30,7 +30,7 @@
         "redux": "^4.2.1",
         "web-vitals": "^2.1.4"
     },
-    "proxy": "http://soundtracked-server-soundtracked.apps.openshift.cs.cf.ac.uk:8080",
+    "proxy": "http://localhost:8080",
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
@@ -54,5 +54,8 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
+    },
+    "engines": {
+        "node": "16.x"
     }
 }

@@ -55,13 +55,56 @@ export default function Results() {
         all_data 
     } = state;
     
-    const [selectedRuns, updateSelectedRuns] = useState([activity_results[0].id]);
-    const [runFilter, updateRunFilter] = useState(false);
-
     const [x_variable, updateXVariable] = useState("bpm");
+    const [x_unit, updateXUnit] = useState("bpm");
     const [x_title, updateXTitle] = useState("Tempo");
     const [y_variable, updateYVariable] = useState("pace");
     const [y_title, updateYTitle] = useState("Pace");
+
+    const [y_description, updateYDescription] = useState("Time taken to complete a kilometre (MM:SS). Pace is the time taken to cover a specified distance, often measured per kilometre or per mile.");
+    const [x_description, updateXDescription] = useState("Tempo of a track in beats per minute (BPM). In musical terminology, tempo is the speed or pace of a given piece and derives directly from the average beat duration.");
+
+
+    const seed_data = all_data.sort(function(a, b){ return a.pace - b.pace;}).slice(0,5);
+    let trackIds = [];
+
+    let averageTempo = 0
+    let averageLoudness = 0
+    let averageKey = 0
+    let averageAcousticness = 0
+    let averageSpeechiness = 0
+
+    seed_data.map((track) => { 
+        trackIds.push(track.id); 
+
+        averageTempo += track.bpm
+        averageLoudness += track.loudness
+        averageKey += track.key
+        averageAcousticness += track.acousticness
+        averageSpeechiness += track.speechiness
+
+    });
+
+    averageTempo = Math.round(averageTempo / seed_data.length);
+    averageLoudness = Math.round(((averageLoudness / seed_data.length) + Number.EPSILON) * 100) / 100;
+    averageKey = Math.round(averageKey / seed_data.length);
+    averageAcousticness = Math.round(((averageAcousticness / seed_data.length) + Number.EPSILON) * 100) / 100;
+    averageSpeechiness = Math.round(((averageSpeechiness / seed_data.length) + Number.EPSILON) * 100) / 100;
+
+    trackIds = trackIds.join(",");
+
+
+    // Filtering the runs based on the filter set
+    const [runFilter, updateRunFilter] = useState(false);
+
+    if (runFilter) {
+        activity_results = activity_results.filter(activity => activity.activity_metrics.length > 0);
+    }
+
+    // Run selection process
+    const [selectedRuns, updateSelectedRuns] = useState([activity_results[0].id]);
+
+    const selectData = activity_results.filter(activity => selectedRuns.toString().indexOf(activity.id) > -1);
 
     const activityClick = (id) => {
         let index = selectedRuns.toString().indexOf(id);
@@ -72,12 +115,7 @@ export default function Results() {
         }
     }
 
-    const selectData = activity_results.filter(activity => selectedRuns.toString().indexOf(activity.id) > -1);
-
-    if (runFilter) {
-        activity_results = activity_results.filter(activity => activity.activity_metrics.length > 0);
-    }
-
+    // Creating the HTML component for listing all activities
     const activities = activity_results.map((activity, index) => 
         <div className={ selectedRuns.includes(activity.id) ? 'run selected' : 'run' } key={ index + 1 } onClick={() => {activityClick(activity.id)} }>
             <span className="count">{index + 1}</span>
@@ -146,19 +184,21 @@ export default function Results() {
                     <div id="right">
                         <div id="results-container">
                             <div id="parameter-select">
-                                <select onChange={(e) => { updateYVariable(e.target.options[e.target.selectedIndex].value); updateYTitle(e.target.options[e.target.selectedIndex].innerText); } }>
-                                    <option value="pace">Pace</option>
+                                <select onChange={(e) => { updateYDescription(e.target.options[e.target.selectedIndex].dataset.description); updateYVariable(e.target.options[e.target.selectedIndex].value); updateYTitle(e.target.options[e.target.selectedIndex].innerText); } }>
+                                    <option data-description="Time taken to complete a kilometre (MM:SS). Pace is the time taken to cover a specified distance, often measured per kilometre or per mile." value="pace">Pace</option>
                                 </select>
+                                <p>{ y_description }</p>
                                 <span></span>
-                                <select onChange={(e) => { updateXVariable(e.target.options[e.target.selectedIndex].value); updateXTitle(e.target.options[e.target.selectedIndex].innerText); }} >
-                                    <option value="bpm">Tempo</option>
-                                    <option value="loudness">Loudness</option>
-                                    <option value="key">Key</option>
-                                    <option value="energy">Energy</option>
-                                    <option value="danceability">Danceability</option>
-                                    <option value="speechiness">Speechiness</option>
-                                    <option value="acousticness">Acousticness</option>
+                                <select id="x-parameter" onChange={(e) => { updateXDescription(e.target.options[e.target.selectedIndex].dataset.description); updateXUnit(e.target.options[e.target.selectedIndex].dataset.unit);updateXVariable(e.target.options[e.target.selectedIndex].value); updateXTitle(e.target.options[e.target.selectedIndex].innerText); }} >
+                                    <option data-description="Tempo of a track in beats per minute (BPM). In musical terminology, tempo is the speed or pace of a given piece and derives directly from the average beat duration." data-unit="bpm" value="bpm">Tempo</option>
+                                    <option data-description="The overall loudness of a track in decibels (dB). The larger the negative value, the quieter the track." data-unit="dB" value="loudness">Loudness</option>
+                                    <option data-description="The key the track is in. E.g. C, C#/D♭, D." data-unit="" value="key">Key</option>
+                                    <option data-description="Percentage energy of a track. It represents a perceptual measure of intensity and activity. Typically, energetic tracks feel fast, loud, and noisy." data-unit="%" value="energy">Energy</option>
+                                    <option data-description="Danceability describes the percentage a track is suitable for dancing based on a combination of musical elements including tempo, rhythm stability, beat strength, and overall regularity." data-unit="%" value="danceability">Danceability</option>
+                                    <option data-description="The presence of spoken words in a track. The more speech-like the recording (e.g. talk show, audio book, poetry), the higher the percentage. Above 66% describe tracks probably made entirely of spoken words. Between 33% and 66% describe tracks that may contain both music and speech, either in sections or layered, including such cases as rap music. Below 33% most likely represent music and other non-speech-like tracks." data-unit="%" value="speechiness">Speechiness</option>
+                                    <option data-description="Acousticness describes the confidence percentage that a track is accoustic." data-unit="%" value="acousticness">Acousticness</option>
                                 </select>
+                                <p>{ x_description }</p>
                             </div>
                             <div id="graph">
                                 <Graph 
@@ -167,12 +207,24 @@ export default function Results() {
                                     x_variable={ x_variable } 
                                     y_title={ y_title }
                                     y_variable={ y_variable }
+                                    x_unit={ x_unit }
                                 />
                             </div>
                         </div>
                         <div id="actions">
                             <Link className="button-main button-black" to={'/'}>I'm Done</Link>
-                            <Link className="button-main" to={'/recommendations'}>Get Recommendations</Link>
+                            <Link className="button-main" 
+                                to={'/recommendations'} 
+                                state={{ 
+                                    trackIds: trackIds,
+                                    init_temp : averageTempo,
+                                    init_loud : averageLoudness,
+                                    init_key : averageKey,
+                                    init_acou : averageAcousticness,
+                                    init_spee : averageSpeechiness
+                                }}>
+                                Get Recommendations
+                            </Link>
                         </div>
                     </div>
                 </div>

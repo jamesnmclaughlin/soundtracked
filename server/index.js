@@ -3,8 +3,7 @@ const functions = require('./function.js');
 const express = require("express");
 const exp = require('constants');
 
-const PORT = process.env.PORT || 3001;
-const IP = process.env.IP || "0.0.0.0";
+const PORT = process.env.PORT || 8080;
 
 const app = express();
 
@@ -12,6 +11,11 @@ app.use(express.json())
 
 app.post("/get-client", (req, res) => {
     const { service_name } = req.body;
+
+    if ( service_name === null ) {
+        res.status(400).end(JSON.stringify({err_code: 400, err_reason: "Missing Name Of Service."}));
+    }
+
     const { 
         REACT_APP_STRAVA_CLIENT_ID,
         REACT_APP_FITBIT_CLIENT_ID,
@@ -40,6 +44,10 @@ app.post("/get-client", (req, res) => {
 app.post("/get-session", (req, res) => {
     const { service_name, auth_code, code_verify } = req.body;
 
+    if (auth_code === null) {
+        return(res.status(422).end(JSON.stringify({err_code: 422, err_reason: "Missing Parameters"})));
+    }
+
     switch(service_name) {
         case "strava":
             functions.getStravaSession(auth_code, function(access_token, expiry_date, refresh_token) {
@@ -51,13 +59,18 @@ app.post("/get-session", (req, res) => {
             });
             break;
         case "fitbit":
-            functions.getFitbitSession(auth_code, code_verify, function(access_token, expiry_date, refresh_token) {
-                res.status(200).end(JSON.stringify({
-                    token: access_token, 
-                    exp_date: expiry_date, 
-                    refresh_token: refresh_token
-                }));
-            });
+            if (code_verify === null) {
+                return(res.status(422).end(JSON.stringify({err_code: 422, err_reason: "Missing Parameters"})));
+            } else {
+                functions.getFitbitSession(auth_code, code_verify, function(access_token, expiry_date, refresh_token) {
+                    res.status(200).end(JSON.stringify({
+                        token: access_token, 
+                        exp_date: expiry_date, 
+                        refresh_token: refresh_token
+                    }));
+                });
+            }
+
             break;
         case "lastfm":
             functions.getLastfmSession(auth_code, function(access_token, name) {
@@ -84,6 +97,10 @@ app.post("/get-session", (req, res) => {
 
 app.post("/refresh-session", (req, res) => {
     const { service_name, refresh_token } = req.body;
+
+    if (refresh_token === null) {
+        return(res.status(422).end(JSON.stringify({err_code: 422, err_reason: "Missing Parameters"})));
+    }
 
     switch(service_name) {
         case "strava":
@@ -123,6 +140,10 @@ app.get("/get-lastfm-songs", (req, res) => {
 
     const { start_date, end_date, user } = req.query;
 
+    if (start_date === null || end_date === null || user === null) {
+        return(res.status(422).end(JSON.stringify({err_code: 422, err_reason: "Missing Parameters"})));
+    }
+
     functions.getLastFmSongs(start_date, end_date, user, function(response) {
         res.status(200).end(JSON.stringify({
             response: response
@@ -130,6 +151,6 @@ app.get("/get-lastfm-songs", (req, res) => {
     });
 });
 
-app.listen(PORT, IP, () => {
+app.listen(PORT, () => {
     console.log('Listening on '+ PORT);
 })

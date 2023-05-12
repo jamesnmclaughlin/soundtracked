@@ -4,7 +4,7 @@ import { checkSpotifyConnection, getSeeds } from './functions/functions';
 const baseURL = "https://api.spotify.com/v1/";
 
 export default function Reccomendation(props) {
-
+    const { seedTracks } = props;
     const apiFunction = "recommendations?";
 
     const [postdata, setPostData] = React.useState([]);
@@ -26,8 +26,7 @@ export default function Reccomendation(props) {
 
     const fetchData = async () => {
         if (checkSpotifyConnection()) {
-            console.log("hello")
-            const seedTracks = await getSeeds();
+            
             const seedArtists = "";
             const seedGenres = "";
             let parameters = "";

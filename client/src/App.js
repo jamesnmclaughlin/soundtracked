@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes, Link } from "react-router-dom";
+import { Route, Routes, Navigate} from "react-router-dom";
 import {reconnectService, checkServiceConnection} from './components/functions/functions';
 
 import Home from './components/pages/Home';
@@ -9,13 +9,12 @@ import Runs from './components/pages/Runs';
 import Recommendations from './components/pages/Recommendations';
 import Results from './components/pages/Results';
 
-import Dev from './components/pages/Dev';
-
 import Handle from './components/handlers/Handle';
 
-const services = ["strava", "fitbit", "deezer", "lastfm"];
 
 export default function App() {
+    
+    const services = ["strava", "fitbit", "deezer", "lastfm"];
     
     services.forEach(service_name => {
         if (!checkServiceConnection(service_name)) {
@@ -37,22 +36,8 @@ export default function App() {
                 <Route path='/results' element={<Results />}/> 
                 <Route path='/recommendations' element={<Recommendations />}/> 
 
-                <Route path='/dev' element={<Dev /> } />
-
-                <Route path='*' element={ NoMatch() }/>
+                <Route path='*' element={ <Navigate to="/" /> }/>
             </Routes>
         </div>
     );
 }
-
-
-function NoMatch() {
-    return (
-        <div>
-            <h1>Not Found</h1>
-            <p>
-                <Link to="/">Go to the home page</Link>
-            </p>
-        </div>
-    );
-} 

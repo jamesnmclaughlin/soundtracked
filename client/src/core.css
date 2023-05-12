@@ -1,5 +1,6 @@
 @font-face {
     font-family: "Helvetica-Neue";
+    font-weight: normal;
     src: url('./resources/HelveticaNeue.ttc');
 }
 
@@ -13,6 +14,7 @@ body {
     margin: 0;
     font-family: 'Helvetica-Neue', Arial, sans-serif;
     color: #fff;
+    background-color: #a7c181;
 }
 
 h1 {
@@ -35,13 +37,15 @@ h1 {
 .flex-container {
     display: flex;
     flex-wrap: wrap;
+    height: calc(100% - 38px);
+    align-items: center;
 }
+svg g.google-visualization-tooltip { pointer-events: none }
 
 /* PAGE BACKGROUNDS ########## */
 
     #container-gradient {
         background-image: url('./resources/gradient-low.png');
-        width: 100vw;
     }
 
     #container-waves {
@@ -67,7 +71,7 @@ h1 {
 .container-ground {
     position: relative;
     padding:40px;
-    height: calc(100% - 80px);
+    height: 100vh;
 }
 
 /* PROGRESS BAR */
@@ -96,13 +100,27 @@ h1 {
 
     }
 
+    #home-graphic {
+        flex: 1 1;
+        height: 100%;
+        padding: 40px;
+    }
+
+    #home-graphic #image {
+        background-image: url('./resources/home-graphic.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 100%;
+    }
+
     #home-featured #title span {
         color: #000;
     }
 
     #home-featured #detailed {
         font-size: 24px;
-        margin-bottom: 4em;
+        margin-bottom: 3em;
         line-height: 1.25em;
     }
 
@@ -133,6 +151,7 @@ h1 {
         border-radius: 15px;
         flex: 1;
         display:flex;
+        max-width: 600px;
     }
 
     #services {
@@ -187,19 +206,21 @@ h1 {
 
     .service-connect {
         background-color: #000;
-        padding: 15px 40px;
+        padding: 15px 0;
         border-radius: 30px;
         color: #fff;
         text-decoration: none;
         text-transform: uppercase;
         font-size: 16px;
         border: none;
+        width: 160px;
+        text-align: center;
     }
 
-
-    .service-connect.connected {
-        background-color: #389200;
-    }
+    .service-connect.connected:hover span { display:none; }
+    .service-connect.connected:hover:before { content: "Disconnect" }
+    .service-connect.connected:hover { background-color: #c20101; }
+    .service-connect.connected { background-color: #389200; cursor: pointer; }
 
     #service-info-container {
         /*width: 60%;*/
@@ -215,6 +236,12 @@ h1 {
 
     #service-info h1 {
         font-size: 64px;
+    }
+
+    #service-info p {
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     #service-info-icons {
@@ -384,7 +411,26 @@ h1 {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    justify-content: center;
+    justify-content: space-around;
+    overflow-y: scroll;
+    height: 730px;
+    background: #00000020;
+    padding: 40px;
+    border-radius: 10px;
+}
+
+#recommendations-container::-webkit-scrollbar-track {
+    display: none;
+}
+
+#recommendations-container::-webkit-scrollbar {
+    width: 10px;
+    padding-left: 5px;
+}
+
+#recommendations-container::-webkit-scrollbar-thumb {
+    background-color: #00000040;
+    border-radius: 20px;
 }
 
 #parameterForm {
@@ -402,11 +448,24 @@ h1 {
 }
 
 #parameter-container {
-    margin-bottom: 30px;
+    margin-bottom: 15px;
+    margin-top: 15px;
 }
 
 .song {
     max-width: 300px;
+}
+
+#recommendation-button-container {
+    position: absolute;
+    z-index: 100;
+    bottom: 40px;
+    width: 100%;
+    text-align: center;
+}
+
+.button-recommendations {
+    box-shadow: 1px 3px 20px 5px #ffffff3b;
 }
 
 /* LOADING PAGE CSS ############## */
@@ -629,9 +688,19 @@ h1 {
     margin-left: 20px;
 }
 
+#parameter-select select {
+    background-color: #26694C;
+    padding: 10px 15px;
+    border-radius: 30px;
+    border: none;
+    color: #fff;
+    text-decoration: none;
+}
+
 #graph-container {
     height: 500px;
     width: 100%;
+    min-width: 400px;
     background-color: #fff;
     align-items: center;
     text-align: center;
@@ -647,3 +716,187 @@ h1 {
 .icon.heart { background-image: url('./resources/heart.png');}
 
 /* ############################## */
+
+
+/* MOBILE CSS */
+
+@media (max-width: 1249px) {
+    #home-featured {
+        padding: 40px;
+        flex: 1 1;
+    }   
+
+    #home-featured #title {
+        font-size: 56px;
+    }
+
+    #home-featured #detailed {
+        font-size: 21px;
+    }
+    
+    .handle-container {
+        max-width: 60%;
+    }
+
+    #parameterForm {
+        flex-direction: column;
+        gap: 5px; 
+        padding: 0 20px;
+        justify-content: center;
+    }
+
+    #parameterForm input {
+        width: 25%;
+        min-width: 200px;
+    }
+
+    #parameterForm .button-main {
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 1049px) {
+    #home-graphic {
+        display: none;
+    }
+
+    #home-featured {
+        text-align: center;
+        padding: 100px 40px;
+    }
+
+    .flex-container {
+        justify-content: center;
+        flex-direction: column-reverse;
+        flex-wrap: nowrap;
+        height: auto;
+    }
+
+    .container-ground {
+        height: auto;
+    }
+
+    .handle-container {
+        max-width: 75%;
+    }
+}
+
+
+
+@media (max-width: 599px) {
+
+    #home-featured #title {
+        font-size: 48px;
+        margin-bottom: 40px;
+    }
+
+    #home-featured #detailed {
+        font-size: 18px;
+    }
+
+    #service-info {
+        padding: 60px 30px;
+    }
+
+    .container-ground {
+        padding: 0;
+    }
+
+    #services-container {
+        border-radius: 15px 15px 0 0;
+    }
+
+    #services {
+        padding: 40px 20px;
+        row-gap: 10px;
+    }
+
+    .connection-animation {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .handle-logo {
+        height: 200px;
+        width: 200px;
+    }
+
+    #logo-container {
+        padding: 40px 0 0 40px; 
+    }
+
+    #actions .button-main:last-child {
+        margin-left: 0;
+        margin-top: 15px;
+        margin-bottom: 40px;
+    }
+
+    #actions .button-main {
+        width: 60%;
+        padding: 15px 20px;
+    }
+
+    #actions {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #average-data .data-item {
+        width: 130px;
+        height: 130px;
+    }
+
+    .data-item p {
+        font-size: 16px;
+    }
+
+    #average-data {
+        justify-content: center;
+    }
+
+    .data-item div {
+        align-items: flex-end;
+        justify-content: flex-end;
+    }
+
+    #average-data .data-item .value {
+        font-size: 39px;
+        line-height: 35px;
+    }
+
+    .data-item .icon {
+        width: 17px;
+    }
+
+    .data-item .measurement .units {
+        font-size: 15px;
+    }
+
+    .results-container #left #run-filters {
+        justify-content: center;
+    }
+
+    #run-list .run .count {
+        font-size: 36px;
+        width: 40px;
+    }
+
+    #run-list .run {
+        align-items: center;
+    }
+
+    #run-list .run .information div {
+        width: 250px;
+    }
+
+    .results-container #left {
+        padding: 0 10px;
+    }
+
+
+    #parameter-select {
+        padding: 0 10px;
+    }
+}
